@@ -68,30 +68,18 @@ final class ProductScraper
 
     private function fetch(string $url): string
     {
-        $ch = curl_init($url);
-        curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_MAXREDIRS => 2,
-            CURLOPT_CONNECTTIMEOUT => 3,
-            CURLOPT_TIMEOUT => 5,
-            CURLOPT_NOSIGNAL => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_HTTPHEADER => [
-                'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language: en-IN,en;q=0.9',
-                'Cache-Control: no-cache',
-                'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36',
-            ],
-        ]);
+        $ctx = stream_context_create(['http' => [
+            'method' => 'GET',
+            'timeout' => 8,
+            'follow_location' => true,
+            'max_redirects' => 2,
+            'header' => "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8\r\nAccept-Language: en-IN,en;q=0.9\r\nCache-Control: no-cache\r\nUser-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0 Safari/537.36",
+        ]]);
 
-        $html = curl_exec($ch);
-        $status = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $error = curl_error($ch);
-        curl_close($ch);
+        $html = @file_get_contents($url, false, $ctx);
 
-        if (!is_string($html) || $html === '' || $status >= 400) {
-            throw new InvalidArgumentException($error ?: 'Unable to fetch product page');
+        if (!is_string($html) || $html === '') {
+            throw new InvalidArgumentException('Unable to fetch product page');
         }
 
         return $html;
