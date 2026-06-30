@@ -50,13 +50,7 @@ try {
     }
 
     if ($method === 'POST' && ($path === '/scrape-product' || $path === '/api/scrape-product')) {
-        $url = $request->input('url');
-        $raw = file_get_contents('php://input');
-        if (!$url) {
-            Response::json(['error' => 'Invalid URL', 'debug' => ['raw' => $raw, 'json' => $request->json()]], 422);
-            return;
-        }
-        $product = (new ProductScraper())->scrape((string) $url);
+        $product = (new ProductScraper())->scrape((string) $request->input('url'));
         Response::json(['product' => $product]);
         return;
     }
