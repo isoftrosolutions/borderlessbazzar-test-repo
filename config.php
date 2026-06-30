@@ -1,9 +1,9 @@
 <?php
 
 define('DB_HOST', 'localhost');
-define('DB_USER', 'test_user');
+define('DB_USER', 'ektamultp_bb_user');
 define('DB_PASS', ';oKu6aH068}Hg6r,');
-define('DB_NAME', 'bb_backend');
+define('DB_NAME', 'ektamultp_bb_backend');
 
 function getDB() {
     static $conn = null;
