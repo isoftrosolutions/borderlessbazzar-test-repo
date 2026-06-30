@@ -49,6 +49,15 @@ try {
         return;
     }
 
+    if ($path === '/__test_fetch') {
+        $ctx = stream_context_create(['http' => ['method' => 'GET', 'timeout' => 3, 'follow_location' => true, 'max_redirects' => 2]]);
+        $start = microtime(true);
+        $result = @file_get_contents('https://www.amazon.in', false, $ctx);
+        $elapsed = round((microtime(true) - $start) * 1000);
+        Response::json(['success' => is_string($result) && $result !== '', 'len' => is_string($result) ? strlen($result) : 0, 'ms' => $elapsed, 'allow_url_fopen' => ini_get('allow_url_fopen')]);
+        return;
+    }
+
     if ($method === 'POST' && ($path === '/scrape-product' || $path === '/api/scrape-product')) {
         $product = (new ProductScraper())->scrape((string) $request->input('url'));
         Response::json(['product' => $product]);
