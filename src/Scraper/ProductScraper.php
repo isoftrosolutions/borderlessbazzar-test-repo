@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace BB\Scraper;
 
 use BB\Database\DB;
+use BB\Support\Logger;
 use DOMDocument;
 use DOMXPath;
 use InvalidArgumentException;
@@ -14,6 +15,7 @@ final class ProductScraper
 {
     public function scrape(string $url): array
     {
+        Logger::info('Scrape called', ['url' => $url, 'len' => strlen($url), 'ord0' => $url !== '' ? ord($url[0]) : -1]);
         $this->validateUrl($url);
 
         $cached = $this->cached($url);
