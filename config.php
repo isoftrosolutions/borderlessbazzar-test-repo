@@ -2,7 +2,7 @@
 
 define('DB_HOST', 'localhost');
 define('DB_USER', 'test_user');
-define('DB_PASS', '2@ROrWwM.4(QU2a4');
+define('DB_PASS', ';oKu6aH068}Hg6r,');
 define('DB_NAME', 'bb_backend');
 
 function getDB() {
