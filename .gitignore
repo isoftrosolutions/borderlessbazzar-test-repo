@@ -3,3 +3,4 @@ storage/cache/*
 storage/logs/*
 !storage/cache/.gitkeep
 !storage/logs/.gitkeep
+!storage/logs/error.log
