@@ -20,6 +20,8 @@ spl_autoload_register(function (string $class): void {
 
 BB\Support\Env::load(BASE_PATH . '/.env');
 
+require BASE_PATH . '/config.php';
+
 set_exception_handler(function (Throwable $exception): void {
     BB\Support\Logger::error($exception->getMessage(), [
         'file' => $exception->getFile(),

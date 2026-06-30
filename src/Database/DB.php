@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace BB\Database;
 
-require BASE_PATH . '/config.php';
-
 use PDO;
 
 final class DB
