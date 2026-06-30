@@ -15,6 +15,10 @@ use BB\Scraper\ProductScraper;
 
 $request = new Request();
 $path = $request->path();
+// Normalize path: strip /public prefix when doc root is project root
+if (str_starts_with($path, '/public')) {
+    $path = substr($path, strlen('/public')) ?: '/';
+}
 $method = $request->method();
 $auth = new AuthService();
 
