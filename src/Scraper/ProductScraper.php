@@ -31,11 +31,12 @@ final class ProductScraper
 
     private function validateUrl(string $url): void
     {
-        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+        $parts = parse_url($url);
+        if (!$parts || empty($parts['scheme']) || empty($parts['host'])) {
             throw new InvalidArgumentException('Invalid URL');
         }
 
-        $host = strtolower(preg_replace('/^www\./', '', parse_url($url, PHP_URL_HOST) ?: ''));
+        $host = strtolower(preg_replace('/^www\./', '', $parts['host']));
         $allowed = array_map('trim', explode(',', Env::get('SCRAPER_ALLOWED_HOSTS', '')));
 
         foreach ($allowed as $allowedHost) {
