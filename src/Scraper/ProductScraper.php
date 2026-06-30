@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace BB\Scraper;
 
 use BB\Database\DB;
-use BB\Support\Env;
 use DOMDocument;
 use DOMXPath;
 use InvalidArgumentException;
@@ -37,7 +36,7 @@ final class ProductScraper
         }
 
         $host = strtolower(preg_replace('/^www\./', '', $parts['host']));
-        $allowed = array_map('trim', explode(',', Env::get('SCRAPER_ALLOWED_HOSTS', '')));
+        $allowed = defined('SCRAPER_ALLOWED_HOSTS') ? array_map('trim', explode(',', SCRAPER_ALLOWED_HOSTS)) : [];
 
         foreach ($allowed as $allowedHost) {
             if ($allowedHost !== '' && ($host === $allowedHost || str_ends_with($host, '.' . $allowedHost))) {

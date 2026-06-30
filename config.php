@@ -5,6 +5,8 @@ define('DB_USER', 'ektamultp_bb_user');
 define('DB_PASS', ';oKu6aH068}Hg6r,');
 define('DB_NAME', 'ektamultp_bb_backend');
 
+define('SCRAPER_ALLOWED_HOSTS', 'amazon.in,amazon.com,myntra.com,flipkart.com,meesho.com');
+
 function getDB() {
     static $conn = null;
     if ($conn === null) {

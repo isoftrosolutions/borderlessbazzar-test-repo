@@ -50,8 +50,6 @@ try {
     }
 
     if ($method === 'POST' && ($path === '/scrape-product' || $path === '/api/scrape-product')) {
-        $raw = file_get_contents('php://input');
-        BB\Support\Logger::info('Scrape request', ['raw' => $raw, 'input_url' => $request->input('url')]);
         $product = (new ProductScraper())->scrape((string) $request->input('url'));
         Response::json(['product' => $product]);
         return;
